@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>그림 아트 스튜디오 — GRIMM ART STUDIO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            jua: ['Jua', 'sans-serif'],
+            noto: ['Noto Sans KR', 'sans-serif'],
+          },
+          colors: {
+            lavender: '#C8B4E8',
+            'lavender-light': '#EDE0FF',
+            'lavender-dark': '#9B7EC8',
+            mustard: '#FFD166',
+            'mustard-light': '#FFF3C4',
+            salmon: '#FF8B8B',
+            'salmon-light': '#FFD4D4',
+            sky: '#74C7EC',
+            'sky-light': '#C8EEFF',
+            grass: '#88D498',
+            'grass-light': '#CCEFCC',
+            ivory: '#FFFBF5',
+          },
+          borderRadius: {
+            '4xl': '2rem',
+            '5xl': '2.5rem',
+          },
+          animation: {
+            'float-slow': 'floatSlow 6s ease-in-out infinite',
+            'float-mid': 'floatMid 4s ease-in-out infinite',
+          },
+          keyframes: {
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            floatMid: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-8px)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans KR', sans-serif; background-color: #FFFBF5; }
+    .font-jua { font-family: 'Jua', sans-serif; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #f4f0ff; }
+    ::-webkit-scrollbar-thumb { background: #C8B4E8; border-radius: 4px; }
+
+    /* Accordion slide animation */
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      opacity: 0;
+    }
+    .accordion-content.open {
+      max-height: 1000px;
+      opacity: 1;
+    }
+
+    /* Tab content fade */
+    .tab-content { display: none; animation: fadeIn 0.3s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Decorative blob */
+    .blob {
+      border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+      position: absolute;
+      opacity: 0.18;
+      filter: blur(2px);
+    }
+
+    /* Input focus ring override */
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+    }
+
+    /* Smooth FAB appearance */
+    .fab-wrap { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .fab-wrap:active { transform: scale(0.93); }
+  </style>
+</head>
+<body>
+
+<!-- ===================== FLOATING ACTION BUTTONS ===================== -->
+<div class="fixed bottom-6 right-4 z-50 flex flex-col items-end gap-3">
+  <a href="tel:010-0000-0000"
+     class="fab-wrap flex items-center gap-2 bg-lavender-dark text-white font-jua text-sm rounded-full px-5 py-3.5 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
+     style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21L8 11s1 2 5 5l1.613-2.224a1 1 0 011.21-.502l4.493 1.498A1 1 0 0121 15.72V19a2 2 0 01-2 2h-1C9.163 21 3 14.837 3 7V5z"/>
+    </svg>
+    전화 상담
+  </a>
+  <a href="sms:010-0000-0000"
+     class="fab-wrap flex items-center gap-2 text-white font-jua text-sm rounded-full px-5 py-3.5 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
+     style="background: linear-gradient(135deg, #FF8B8B, #FFB4B4);">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 16c0 1.1-.9 2-2 2H7l-4 4V6a2 2 0 012-2h14a2 2 0 012 2v10z"/>
+    </svg>
+    문자 문의
+  </a>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section id="top" class="relative overflow-hidden pt-12 pb-16 px-5"
+  style="background: linear-gradient(160deg, #EDE0FF 0%, #FFF3C4 45%, #C8EEFF 100%);">
+
+  <!-- Background blobs -->
+  <div class="blob w-48 h-48 top-2 -left-10" style="background:#FFD166;"></div>
+  <div class="blob w-36 h-36 top-16 right-0" style="background:#FF8B8B;"></div>
+  <div class="blob w-40 h-40 bottom-4 left-1/3" style="background:#88D498;"></div>
+
+  <div class="relative max-w-lg mx-auto text-center">
+
+    <!-- Logo badge -->
+    <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-5 py-2 mb-5 shadow-md">
+      <span class="text-2xl">🎨</span>
+      <span class="font-jua text-lavender-dark text-base tracking-widest">GRIMM ART STUDIO</span>
+    </div>
+
+    <!-- Main heading -->
+    <h1 class="font-jua text-3xl leading-snug text-gray-800 mb-3">
+      아이들의 행복한<br/>
+      <span style="color:#9B7EC8;">창의 놀이터</span>
+    </h1>
+    <p class="font-jua text-lg text-gray-600 mb-1">그림 아트 스튜디오</p>
+    <p class="text-gray-500 text-sm mb-8 leading-relaxed">
+      좋은 재료와 따뜻한 선생님이 함께해요 🌈
+    </p>
+
+    <!-- Hero image -->
+    <div class="relative mx-auto mb-8 max-w-sm">
+      <div class="rounded-4xl overflow-hidden shadow-2xl border-4 border-white">
+        <img
+          src="https://placehold.co/600x380/C8B4E8/FFFFFF?text=🎨+GRIMM+ART+STUDIO"
+          alt="그림 아트 스튜디오 메인"
+          class="w-full"
+        />
+      </div>
+      <!-- Floating stickers -->
+      <span class="absolute -top-4 -right-3 text-3xl animate-float-slow select-none">🌟</span>
+      <span class="absolute -bottom-3 -left-3 text-3xl animate-float-mid select-none">🖌️</span>
+    </div>
+
+    <!-- CTA -->
+    <a href="#reservation"
+       class="inline-block font-jua text-lg text-white rounded-full px-10 py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
+       style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
+      ✏️ 체험 수업 예약하기
+    </a>
+    <p class="text-xs text-gray-400 mt-3">첫 체험 수업 50% 할인 중 🎉</p>
+
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="py-14 px-5 bg-white">
+  <div class="max-w-lg mx-auto">
+
+    <p class="font-jua text-sm text-lavender-dark text-center mb-1 tracking-widest">ABOUT US</p>
+    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">✨ 우리 학원 소개</h2>
+    <p class="text-center text-gray-400 text-sm mb-10">입시가 아닌, 행복한 창의력을 키우는 곳</p>
+
+    <!-- Feature grid -->
+    <div class="grid grid-cols-2 gap-3 mb-10">
+      <div class="rounded-4xl p-5 text-center border-2 border-yellow-200 hover:shadow-md transition-shadow"
+           style="background: linear-gradient(135deg, #FFFDE7, #FFF8DC);">
+        <div class="text-4xl mb-2">🎨</div>
+        <p class="font-jua text-yellow-700 text-sm mb-1">최고급 물감</p>
+        <p class="text-xs text-gray-400 leading-relaxed">전문 작가용<br/>아크릴·수채화 물감</p>
+      </div>
+      <div class="rounded-4xl p-5 text-center border-2 border-sky-200 hover:shadow-md transition-shadow"
+           style="background: linear-gradient(135deg, #E8F8FF, #D0F0FF);">
+        <div class="text-4xl mb-2">🖼️</div>
+        <p class="font-jua text-sky-600 text-sm mb-1">진짜 캔버스</p>
+        <p class="text-xs text-gray-400 leading-relaxed">종이가 아닌<br/>천 캔버스 사용</p>
+      </div>
+      <div class="rounded-4xl p-5 text-center border-2 border-pink-200 hover:shadow-md transition-shadow"
+           style="background: linear-gradient(135deg, #FFF0F0, #FFE4E4);">
+        <div class="text-4xl mb-2">🌿</div>
+        <p class="font-jua text-pink-600 text-sm mb-1">친환경 재료</p>
+        <p class="text-xs text-gray-400 leading-relaxed">아이에게 안전한<br/>무독성 제품만</p>
+      </div>
+      <div class="rounded-4xl p-5 text-center border-2 border-green-200 hover:shadow-md transition-shadow"
+           style="background: linear-gradient(135deg, #F0FFF4, #DCFFE8);">
+        <div class="text-4xl mb-2">😊</div>
+        <p class="font-jua text-green-600 text-sm mb-1">소수 정예</p>
+        <p class="text-xs text-gray-400 leading-relaxed">선생님 1명당<br/>최대 5명 수업</p>
+      </div>
+    </div>
+
+    <!-- Photo gallery -->
+    <div class="grid grid-cols-3 gap-2 mb-3">
+      <div class="rounded-3xl overflow-hidden shadow-md col-span-2">
+        <img src="https://placehold.co/400x300/FFD166/FFFFFF?text=🎨+미술+시간" alt="미술 시간" class="w-full h-full object-cover" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <div class="rounded-3xl overflow-hidden shadow-md flex-1">
+          <img src="https://placehold.co/200x140/FF8B8B/FFFFFF?text=작품" alt="작품" class="w-full h-full object-cover" />
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-md flex-1">
+          <img src="https://placehold.co/200x140/88D498/FFFFFF?text=재료" alt="재료" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+    <div class="rounded-3xl overflow-hidden shadow-md">
+      <img src="https://placehold.co/600x220/74C7EC/FFFFFF?text=🖌️+행복한+창의+놀이터" alt="학원 내부" class="w-full" />
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== PROGRAMS & PRICING ===================== -->
+<section id="programs" class="py-14 px-5"
+  style="background: linear-gradient(160deg, #FFFBF5 0%, #F0F4FF 100%);">
+  <div class="max-w-lg mx-auto">
+
+    <p class="font-jua text-sm text-orange-400 text-center mb-1 tracking-widest">PROGRAMS</p>
+    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">🖌️ 수업 프로그램</h2>
+    <p class="text-center text-gray-400 text-sm mb-10">우리 아이에게 딱 맞는 수업을 찾아보세요</p>
+
+    <!-- Program Cards -->
+    <div class="flex flex-col gap-4 mb-8">
+
+      <div class="bg-white rounded-4xl p-5 shadow-md border-l-[5px] hover:shadow-lg transition-shadow" style="border-color:#FFD166;">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex-1">
+            <span class="inline-block font-jua text-xs px-3 py-1 rounded-full mb-2" style="background:#FFF3C4; color:#B7791F;">원데이 클래스</span>
+            <h3 class="font-jua text-base text-gray-800 mb-1">특별한 하루 미술 체험</h3>
+            <p class="text-gray-500 text-xs leading-relaxed">캔버스에 나만의 작품 한 점 완성!<br/>부담 없이 처음 시작하기 딱 좋아요.</p>
+            <div class="flex gap-3 mt-2">
+              <span class="text-xs text-gray-400">⏱ 90분</span>
+              <span class="text-xs text-gray-400">👶 5~13세</span>
+            </div>
+          </div>
+          <span class="text-3xl mt-1 select-none">🌟</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-4xl p-5 shadow-md border-l-[5px] hover:shadow-lg transition-shadow" style="border-color:#C8B4E8;">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex-1">
+            <span class="inline-block font-jua text-xs px-3 py-1 rounded-full mb-2" style="background:#EDE0FF; color:#6B3FA0;">정규 수업</span>
+            <h3 class="font-jua text-base text-gray-800 mb-1">창의력 발달 정규반</h3>
+            <p class="text-gray-500 text-xs leading-relaxed">매주 꾸준히 성장하는 우리 아이 미술 실력.<br/>다양한 재료와 기법으로 표현력 UP!</p>
+            <div class="flex gap-3 mt-2">
+              <span class="text-xs text-gray-400">⏱ 주 1~2회</span>
+              <span class="text-xs text-gray-400">👶 5~13세</span>
+            </div>
+          </div>
+          <span class="text-3xl mt-1 select-none">🎨</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-4xl p-5 shadow-md border-l-[5px] hover:shadow-lg transition-shadow" style="border-color:#FF8B8B;">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex-1">
+            <span class="inline-block font-jua text-xs px-3 py-1 rounded-full mb-2" style="background:#FFD4D4; color:#C53030;">방학 특강</span>
+            <h3 class="font-jua text-base text-gray-800 mb-1">방학 집중 미술 특강</h3>
+            <p class="text-gray-500 text-xs leading-relaxed">방학 동안 마음껏 그려봐요!<br/>집중 코스로 실력이 훌쩍 늘어요.</p>
+            <div class="flex gap-3 mt-2">
+              <span class="text-xs text-gray-400">⏱ 방학 기간</span>
+              <span class="text-xs text-gray-400">👶 5~13세</span>
+            </div>
+          </div>
+          <span class="text-3xl mt-1 select-none">🏖️</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pricing Toggle Button -->
+    <div class="text-center mb-4">
+      <button id="pricingBtn" onclick="togglePricing()" class="font-jua text-base text-white rounded-full px-8 py-4 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" style="background: linear-gradient(135deg, #FF8B8B, #FFB366);">
+        💰 가격표 보기 ▾
+      </button>
+    </div>
+
+    <!-- Pricing Accordion -->
+    <div id="pricingAccordion" class="accordion-content">
+      <div class="bg-white rounded-4xl p-6 shadow-xl border border-orange-100">
+        <h3 class="font-jua text-xl text-center mb-6" style="color:#FF8B8B;">💰 수업 가격표</h3>
+
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center justify-between rounded-3xl p-4" style="background:#FFF3C4;">
+            <div>
+              <p class="font-jua text-sm" style="color:#B7791F;">원데이 클래스</p>
+              <p class="text-xs text-gray-400 mt-0.5">90분 · 재료비 포함</p>
+            </div>
+            <p class="font-jua text-xl" style="color:#D97706;">35,000원</p>
+          </div>
+
+          <div class="flex items-center justify-between rounded-3xl p-4" style="background:#EDE0FF;">
+            <div>
+              <p class="font-jua text-sm" style="color:#6B3FA0;">정규반 (주 1회)</p>
+              <p class="text-xs text-gray-400 mt-0.5">월 4회 · 재료비 포함</p>
+            </div>
+            <p class="font-jua text-xl" style="color:#6B3FA0;">120,000원</p>
+          </div>
+
+          <div class="flex items-center justify-between rounded-3xl p-4" style="background:#EDE0FF;">
+            <div>
+              <p class="font-jua text-sm" style="color:#6B3FA0;">정규반 (주 2회)</p>
+              <p class="text-xs text-gray-400 mt-0.5">월 8회 · 재료비 포함</p>
+            </div>
+            <p class="font-jua text-xl" style="color:#6B3FA0;">200,000원</p>
+          </div>
+
+          <div class="flex items-center justify-between rounded-3xl p-4" style="background:#FFD4D4;">
+            <div>
+              <p class="font-jua text-sm" style="color:#C53030;">방학 특강</p>
+              <p class="text-xs text-gray-400 mt-0.5">10회 패키지 · 재료비 포함</p>
+            </div>
+            <p class="font-jua text-xl" style="color:#C53030;">280,000원</p>
+          </div>
+
+          <div class="rounded-3xl p-4 text-center" style="background: linear-gradient(135deg, #DCFFE8, #C8EEFF);">
+            <p class="font-jua text-sm text-green-700">🎉 형제자매 등록 시 10% 할인</p>
+            <p class="font-jua text-sm text-sky-600 mt-1">✨ 첫 체험 수업 50% 할인</p>
+          </div>
+        </div>
+
+        <button onclick="togglePricing()" class="w-full mt-5 font-jua text-sm text-gray-400 hover:text-gray-600 transition-colors py-2">
+          ▲ 접기
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== REVIEWS & TEACHER ===================== -->
+<section id="reviews" class="py-14 px-5 bg-white">
+  <div class="max-w-lg mx-auto">
+
+    <!-- Reviews -->
+    <p class="font-jua text-sm text-sky-500 text-center mb-1 tracking-widest">REVIEWS</p>
+    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">💬 학부모 후기</h2>
+    <p class="text-center text-gray-400 text-sm mb-8">실제 학부모님들의 솔직한 이야기</p>
+
+    <div class="flex flex-col gap-4 mb-14">
+
+      <div class="rounded-4xl p-5 shadow-sm border" style="background:#EFF9FF; border-color:#C8EEFF;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-11 h-11 rounded-full flex items-center justify-center font-jua text-lg flex-shrink-0"
+               style="background:#74C7EC; color:white;">김</div>
+          <div>
+            <p class="font-jua text-gray-700 text-sm">김○○ 어머니</p>
+            <p class="text-yellow-400 text-xs mt-0.5">⭐⭐⭐⭐⭐</p>
+          </div>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          "아이가 매주 학원 가는 날만 손꼽아 기다려요.
+          재료가 정말 좋아서 작품이 너무 예쁘게 나오고,
+          선생님이 아이 자존감을 키워주시는 방식으로 수업해 주셔서 감동받았어요."
+        </p>
+      </div>
+
+      <div class="rounded-4xl p-5 shadow-sm border" style="background:#FFF0F3; border-color:#FFD4D4;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-11 h-11 rounded-full flex items-center justify-center font-jua text-lg flex-shrink-0"
+               style="background:#FF8B8B; color:white;">박</div>
+          <div>
+            <p class="font-jua text-gray-700 text-sm">박○○ 아버지</p>
+            <p class="text-yellow-400 text-xs mt-0.5">⭐⭐⭐⭐⭐</p>
+          </div>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          "딸아이가 처음엔 '나는 그림 못 그려' 했는데,
+          3개월 다니고 나서 스스로 스케치북 사달라고 할 만큼 미술에 빠졌어요.
+          소수정예라 선생님이 우리 아이를 정말 잘 봐주세요!"
+        </p>
+      </div>
+
+      <div class="rounded-4xl p-5 shadow-sm border" style="background:#F0FFF4; border-color:#CCEFCC;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-11 h-11 rounded-full flex items-center justify-center font-jua text-lg flex-shrink-0"
+               style="background:#88D498; color:white;">이</div>
+          <div>
+            <p class="font-jua text-gray-700 text-sm">이○○ 어머니</p>
+            <p class="text-yellow-400 text-xs mt-0.5">⭐⭐⭐⭐⭐</p>
+          </div>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          "원데이 체험으로 시작했는데 아이가 정규반 등록해 달라고 조르더라고요 😄
+          완성된 캔버스 작품 가져올 때 아이 표정이 너무 뿌듯해해서 저도 행복했어요."
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Teacher -->
+    <p class="font-jua text-sm text-green-500 text-center mb-1 tracking-widest">TEACHER</p>
+    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">👩‍🎨 선생님 소개</h2>
+    <p class="text-center text-gray-400 text-sm mb-8">아이들의 가능성을 믿는 그림 선생님</p>
+
+    <div class="rounded-4xl p-6 shadow-md" style="background: linear-gradient(135deg, #EDE0FF 0%, #FFE4E4 100%);">
+      <div class="flex items-center gap-4 mb-5">
+        <div class="w-24 h-24 rounded-3xl overflow-hidden flex-shrink-0 shadow-lg border-4 border-white">
+          <img src="https://placehold.co/200x200/C8B4E8/FFFFFF?text=👩‍🎨" alt="원장 선생님" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <p class="font-jua text-lg text-gray-800">홍길동 원장 선생님</p>
+          <p class="text-gray-500 text-xs mt-1 leading-relaxed">미술교육학 전공<br/>아동미술지도사 1급</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-2 text-sm text-gray-600 mb-5">
+        <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
+          <span>🎓</span>
+          <p>홍익대학교 미술교육학과 졸업</p>
+        </div>
+        <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
+          <span>🏆</span>
+          <p>아동미술지도사 1급 자격증</p>
+        </div>
+        <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
+          <span>✏️</span>
+          <p>미술 교육 경력 10년+</p>
+        </div>
+        <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
+          <span>🖼️</span>
+          <p>키즈 미술 전문 갤러리 전시 참여</p>
+        </div>
+      </div>
+
+      <div class="bg-white/70 rounded-3xl p-4 border-l-4 text-sm text-gray-600 italic leading-relaxed" style="border-color:#C8B4E8;">
+        "모든 아이는 타고난 예술가입니다. 제가 하는 일은 그 재능이 마음껏 펼쳐지도록 옆에서 응원하는 것이에요. 😊 그림 아트 스튜디오에서 우리 아이들이 행복하게 자라기를 바랍니다."
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== RESERVATION ===================== -->
+<section id="reservation" class="py-14 px-5"
+  style="background: linear-gradient(160deg, #EDE0FF 0%, #FFE4E4 100%);">
+  <div class="max-w-lg mx-auto">
+
+    <p class="font-jua text-sm text-lavender-dark text-center mb-1 tracking-widest">CONTACT</p>
+    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">📋 상담 &amp; 예약 센터</h2>
+    <p class="text-center text-gray-400 text-sm mb-8">궁금한 것들을 편하게 물어봐 주세요 🙌</p>
+
+    <!-- Tab Buttons -->
+    <div class="flex gap-2 bg-white/70 backdrop-blur-sm rounded-3xl p-2 shadow-sm mb-6">
+      <button id="tabBtn1" onclick="switchTab(1)"
+        class="flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-white shadow-md"
+        style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
+        💬 상담 신청
+      </button>
+      <button id="tabBtn2" onclick="switchTab(2)"
+        class="flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-gray-400 hover:text-gray-600">
+        🖌️ 수업 예약
+      </button>
+    </div>
+
+    <!-- Tab 1: Consultation -->
+    <div id="tabContent1" class="tab-content active">
+      <div class="bg-white rounded-4xl p-6 shadow-lg">
+        <h3 class="font-jua text-lg mb-5" style="color:#9B7EC8;">💬 상담 신청서</h3>
+        <form onsubmit="submitForm(event, '상담')">
+          <div class="flex flex-col gap-4">
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">부모님 성함 <span class="text-red-400">*</span></label>
+              <input type="text" name="parentName" placeholder="홍길동" required
+                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
+                style="border-color:#EDE0FF;"
+                onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'" />
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">연락처 <span class="text-red-400">*</span></label>
+              <input type="tel" name="phone" placeholder="010-0000-0000" required
+                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
+                style="border-color:#EDE0FF;"
+                onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'" />
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 상담 날짜</label>
+              <input type="date" name="consultDate"
+                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
+                style="border-color:#EDE0FF;"
+                onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'" />
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 상담 시간</label>
+              <select name="consultTime" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
+                style="border-color:#EDE0FF;"
+                onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'">
+                <option value="">시간을 선택해 주세요</option>
+                <option>오전 10:00</option>
+                <option>오전 11:00</option>
+                <option>오후 1:00</option>
+                <option>오후 2:00</option>
+                <option>오후 3:00</option>
+                <option>오후 4:00</option>
+                <option>오후 5:00</option>
+              </select>
+            </div>
+
+            <label class="flex items-center gap-3 rounded-3xl p-4 cursor-pointer border-2 border-yellow-200 hover:border-yellow-400 transition-colors" style="background:#FFFDE7;">
+              <input type="checkbox" name="urgent" id="urgentCheck" class="w-5 h-5 rounded accent-purple-500 flex-shrink-0" />
+              <span class="font-jua text-sm text-yellow-700">⚡ 최대한 빨리 상담 원해요!</span>
+            </label>
+
+            <button type="submit"
+              class="w-full font-jua text-base text-white rounded-2xl py-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
+              선생님께 보내기 ✉️
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tab 2: Reservation -->
+    <div id="tabContent2" class="tab-content">
+      <div class="bg-white rounded-4xl p-6 shadow-lg">
+        <h3 class="font-jua text-lg mb-5" style="color:#FF8B8B;">🖌️ 수업 예약서</h3>
+        <form onsubmit="submitForm(event, '예약')">
+          <div class="flex flex-col gap-4">
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">아이 이름 <span class="text-red-400">*</span></label>
+              <input type="text" name="childName" placeholder="홍길동" required
+                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
+                style="border-color:#FFD4D4;"
+                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'" />
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">아이 나이 <span class="text-red-400">*</span></label>
+              <select name="childAge" required
+                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
+                style="border-color:#FFD4D4;"
+                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
+                <option value="">나이를 선택해 주세요</option>
+                <option>5세</option>
+                <option>6세</option>
+                <option>7세</option>
+                <option>8세</option>
+                <option>9세</option>
+                <option>10세</option>
+                <option>11세</option>
+                <option>12세</option>
+                <option>13세</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 수업</label>
+              <select name="program" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
+                style="border-color:#FFD4D4;"
+                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
+                <option value="">수업을 선택해 주세요</option>
+                <option>원데이 클래스 (체험)</option>
+                <option>정규반 (주 1회)</option>
+                <option>정규반 (주 2회)</option>
+                <option>방학 특강</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 날짜</label>
+              <input type="date" name="reserveDate"
+                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
+                style="border-color:#FFD4D4;"
+                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'" />
+            </div>
+
+            <div>
+              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 시간</label>
+              <select name="reserveTime" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
+                style="border-color:#FFD4D4;"
+                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
+                <option value="">시간을 선택해 주세요</option>
+                <option>오전 10:00</option>
+                <option>오전 11:00</option>
+                <option>오후 1:00</option>
+                <option>오후 2:00</option>
+                <option>오후 3:00</option>
+                <option>오후 4:00</option>
+                <option>오후 5:00</option>
+              </select>
+            </div>
+
+            <button type="submit"
+              class="w-full font-jua text-base text-white rounded-2xl py-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              style="background: linear-gradient(135deg, #FF8B8B, #FFB4B4);">
+              선생님께 보내기 ✉️
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="py-12 px-5" style="background: #2D2D3A;">
+  <div class="max-w-lg mx-auto text-center">
+
+    <div class="inline-flex items-center gap-2 mb-3">
+      <span class="text-2xl">🎨</span>
+      <span class="font-jua text-xl" style="color:#C8B4E8;">GRIMM ART STUDIO</span>
+    </div>
+    <p class="font-jua text-gray-400 text-sm mb-8">그림 아트 스튜디오</p>
+
+    <div class="flex flex-col gap-2.5 text-sm text-gray-400 mb-8">
+      <p class="flex items-center justify-center gap-2">
+        <span>📍</span>
+        <span>서울특별시 서초구 어딘가 123-45</span>
+      </p>
+      <p class="flex items-center justify-center gap-2">
+        <span>📞</span>
+        <a href="tel:010-0000-0000" class="hover:text-white transition-colors" style="color:#C8B4E8;">010-0000-0000</a>
+      </p>
+      <p class="flex items-center justify-center gap-2">
+        <span>🕐</span>
+        <span>평일 10:00 ~ 19:00 &nbsp;|&nbsp; 주말 10:00 ~ 17:00</span>
+      </p>
+    </div>
+
+    <!-- Instagram -->
+    <a href="#"
+       class="inline-flex items-center gap-2 text-white font-jua text-sm rounded-full px-6 py-3 mb-8 hover:opacity-90 transition-opacity shadow-lg"
+       style="background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+      </svg>
+      @grimm.art.studio
+    </a>
+
+    <p class="text-xs text-gray-600">© 2025 GRIMM ART STUDIO. All rights reserved.</p>
+
+  </div>
+</footer>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+  // ★ Apps Script 배포 후 여기에 웹 앱 URL을 붙여넣으세요
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz12HzIt8AZDdd1AYPaLKrR1IK1Jm0eq_TLGIDvUR09lnGLUHtgtAR6PUaDdFQTW3PBvA/exec';
+
+  // ── Pricing Accordion ──────────────────────────────────────────
+  let pricingOpen = false;
+
+  function togglePricing() {
+    const accordion = document.getElementById('pricingAccordion');
+    const btn = document.getElementById('pricingBtn');
+    pricingOpen = !pricingOpen;
+
+    if (pricingOpen) {
+      accordion.classList.add('open');
+      btn.textContent = '💰 가격표 닫기 ▴';
+      setTimeout(() => {
+        accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    } else {
+      accordion.classList.remove('open');
+      btn.textContent = '💰 가격표 보기 ▾';
+    }
+  }
+
+  // ── Tab Switch ─────────────────────────────────────────────────
+  function switchTab(tab) {
+    const content1 = document.getElementById('tabContent1');
+    const content2 = document.getElementById('tabContent2');
+    const btn1 = document.getElementById('tabBtn1');
+    const btn2 = document.getElementById('tabBtn2');
+
+    const activeStyle   = 'flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-white shadow-md';
+    const inactiveStyle = 'flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-gray-400 hover:text-gray-600';
+
+    if (tab === 1) {
+      content1.classList.add('active');
+      content2.classList.remove('active');
+      btn1.className = activeStyle;
+      btn1.style.background = 'linear-gradient(135deg, #9B7EC8, #C8B4E8)';
+      btn2.className = inactiveStyle;
+      btn2.style.background = '';
+    } else {
+      content2.classList.add('active');
+      content1.classList.remove('active');
+      btn2.className = activeStyle;
+      btn2.style.background = 'linear-gradient(135deg, #FF8B8B, #FFB4B4)';
+      btn1.className = inactiveStyle;
+      btn1.style.background = '';
+    }
+  }
+
+  // ── Form Submit (fetch → Apps Script) ─────────────────────────
+  async function submitForm(event, type) {
+    event.preventDefault();
+    const form = event.target;
+    const btn  = form.querySelector('button[type="submit"]');
+    const fd   = new FormData(form);
+
+    // 전송할 데이터 조립
+    let payload;
+    if (type === '상담') {
+      payload = {
+        type:        '상담',
+        name:        fd.get('parentName'),
+        phone:       fd.get('phone'),
+        date:        fd.get('consultDate') || '-',
+        time:        fd.get('consultTime') || '-',
+        urgent:      fd.get('urgent') === 'on'
+      };
+    } else {
+      payload = {
+        type:      '예약',
+        childName: fd.get('childName'),
+        age:       fd.get('childAge'),
+        program:   fd.get('program')     || '-',
+        date:      fd.get('reserveDate') || '-',
+        time:      fd.get('reserveTime') || '-'
+      };
+    }
+
+    // 버튼 로딩 상태
+    const originalText = btn.innerHTML;
+    btn.innerHTML  = '⏳ 전송 중...';
+    btn.disabled   = true;
+
+    try {
+      // no-cors: Apps Script로 전송 (응답 본문은 읽을 수 없지만 데이터는 정상 전달됨)
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body:    JSON.stringify(payload)
+      });
+
+      // 성공 메시지
+      if (type === '상담') {
+        const urgent = payload.urgent;
+        _showToast(
+          urgent ? '⚡ 긴급 상담 신청 완료!' : '✅ 상담 신청 완료!',
+          urgent
+            ? '최대한 빠르게 연락드리겠습니다 😊'
+            : '빠른 시간 내에 연락드리겠습니다 😊',
+          '#9B7EC8'
+        );
+      } else {
+        _showToast('🎨 수업 예약 완료!', '선생님이 확인 후 연락드릴게요 🌟', '#FF8B8B');
+      }
+      form.reset();
+
+    } catch (err) {
+      _showToast('❌ 전송 실패', '잠시 후 다시 시도하거나 전화로 문의해 주세요.', '#888');
+    } finally {
+      btn.innerHTML = originalText;
+      btn.disabled  = false;
+    }
+  }
+
+  // ── Toast 알림 ────────────────────────────────────────────────
+  function _showToast(title, message, color) {
+    // 기존 토스트 제거
+    const prev = document.getElementById('toast');
+    if (prev) prev.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = `
+      position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+      background:#fff; border-left:5px solid ${color};
+      border-radius:16px; padding:14px 20px; box-shadow:0 8px 32px rgba(0,0,0,0.15);
+      z-index:9999; min-width:280px; max-width:calc(100vw - 40px);
+      animation: slideUp 0.3s ease;
+    `;
+    toast.innerHTML = `
+      <p style="font-family:'Jua',sans-serif; font-size:15px; color:#333; margin:0 0 4px;">${title}</p>
+      <p style="font-size:13px; color:#888; margin:0;">${message}</p>
+    `;
+
+    // 애니메이션 스타일 주입 (한 번만)
+    if (!document.getElementById('toastStyle')) {
+      const s = document.createElement('style');
+      s.id = 'toastStyle';
+      s.textContent = '@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+      document.head.appendChild(s);
+    }
+
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.animation = 'none';
+      toast.style.opacity   = '0';
+      toast.style.transition = 'opacity 0.4s';
+      setTimeout(() => toast.remove(), 400);
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
