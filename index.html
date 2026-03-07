@@ -100,6 +100,8 @@
 <!-- 배포: GitHub Desktop에서 변경사항 커밋 후 Push origin 하면 Vercel이 해당 저장소를 감지해 자동으로 새 버전을 배포합니다. -->
 
 <!-- ===================== FLOATING ACTION BUTTONS ===================== -->
+<!-- [실제 정보로 수정] 전화/문자 번호 (아래 2곳) -->
+<!-- [작성 텍스트] 플로팅 버튼 문구: 전화 상담, 문자 문의 -->
 <div class="fixed bottom-6 right-4 z-50 flex flex-col items-end gap-3">
   <a href="tel:010-0000-0000"
      class="fab-wrap flex items-center gap-2 bg-lavender-dark text-white font-jua text-sm rounded-full px-5 py-3.5 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
@@ -137,6 +139,7 @@
     </div>
 
     <!-- Main heading -->
+    <!-- [작성 텍스트] 히어로 제목·부제·설명 -->
     <h1 class="font-jua text-3xl leading-snug text-gray-800 mb-3">
       아이들의 행복한<br/>
       <span style="color:#9B7EC8;">창의 놀이터</span>
@@ -147,6 +150,7 @@
     </p>
 
     <!-- Hero image -->
+    <!-- [실제 정보로 수정] 메인 히어로 이미지 URL (실제 학원/작품 사진으로 교체) -->
     <div class="relative mx-auto mb-8 max-w-sm">
       <div class="rounded-4xl overflow-hidden shadow-2xl border-4 border-white">
         <img
@@ -161,6 +165,7 @@
     </div>
 
     <!-- CTA -->
+    <!-- [작성 텍스트] CTA 버튼·할인 문구 -->
     <a href="#reservation"
        class="inline-block font-jua text-lg text-white rounded-full px-10 py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
        style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
@@ -176,10 +181,12 @@
   <div class="max-w-lg mx-auto">
 
     <p class="font-jua text-sm text-lavender-dark text-center mb-1 tracking-widest">ABOUT US</p>
+    <!-- [작성 텍스트] 소개 섹션 제목·부제 (입시가 아닌...) -->
     <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">✨ 우리 학원 소개</h2>
     <p class="text-center text-gray-400 text-sm mb-10">입시가 아닌, 행복한 창의력을 키우는 곳</p>
 
     <!-- Feature grid -->
+    <!-- [작성 텍스트] 특징 4개 카드 (최고급 물감, 진짜 캔버스, 친환경 재료, 소수 정예) -->
     <div class="grid grid-cols-2 gap-3 mb-10">
       <div class="rounded-4xl p-5 text-center border-2 border-yellow-200 hover:shadow-md transition-shadow"
            style="background: linear-gradient(135deg, #FFFDE7, #FFF8DC);">
@@ -208,6 +215,7 @@
     </div>
 
     <!-- Photo gallery -->
+    <!-- [실제 정보로 수정] 갤러리 이미지 4개 URL (미술 시간, 작품, 재료, 학원 내부) -->
     <div class="grid grid-cols-3 gap-2 mb-3">
       <div class="rounded-3xl overflow-hidden shadow-md col-span-2">
         <img src="https://placehold.co/400x300/FFD166/FFFFFF?text=🎨+미술+시간" alt="미술 시간" class="w-full h-full object-cover" />
@@ -234,10 +242,12 @@
   <div class="max-w-lg mx-auto">
 
     <p class="font-jua text-sm text-orange-400 text-center mb-1 tracking-widest">PROGRAMS</p>
+    <!-- [작성 텍스트] 프로그램 섹션 제목·부제 -->
     <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">🖌️ 수업 프로그램</h2>
     <p class="text-center text-gray-400 text-sm mb-10">우리 아이에게 딱 맞는 수업을 찾아보세요</p>
 
     <!-- Program Cards -->
+    <!-- [작성 텍스트] 수업 카드 3개 (원데이, 정규반, 방학 특강) 제목·설명 -->
     <div class="flex flex-col gap-4 mb-8">
 
       <div class="bg-white rounded-4xl p-5 shadow-md border-l-[5px] hover:shadow-lg transition-shadow" style="border-color:#FFD166;">
@@ -288,6 +298,7 @@
     </div>
 
     <!-- Pricing Toggle Button -->
+    <!-- [작성 텍스트] 가격표 열기/닫기 버튼 문구 (JS에서 "가격표 닫기"도 사용) -->
     <div class="text-center mb-4">
       <button id="pricingBtn" onclick="togglePricing()" class="font-jua text-base text-white rounded-full px-8 py-4 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" style="background: linear-gradient(135deg, #FF8B8B, #FFB366);">
         💰 가격표 보기 ▾
@@ -295,6 +306,7 @@
     </div>
 
     <!-- Pricing Accordion -->
+    <!-- [작성 텍스트] 가격표 항목·금액·할인 문구 -->
     <div id="pricingAccordion" class="accordion-content">
       <div class="bg-white rounded-4xl p-6 shadow-xl border border-orange-100">
         <h3 class="font-jua text-xl text-center mb-6" style="color:#FF8B8B;">💰 수업 가격표</h3>
@@ -338,6 +350,7 @@
           </div>
         </div>
 
+        <!-- [작성 텍스트] 가격표 접기 버튼 -->
         <button onclick="togglePricing()" class="w-full mt-5 font-jua text-sm text-gray-400 hover:text-gray-600 transition-colors py-2">
           ▲ 접기
         </button>
@@ -353,11 +366,12 @@
 
     <!-- Reviews -->
     <p class="font-jua text-sm text-sky-500 text-center mb-1 tracking-widest">REVIEWS</p>
+    <!-- [작성 텍스트] 학부모 후기 섹션 제목·부제 -->
     <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">💬 학부모 후기</h2>
     <p class="text-center text-gray-400 text-sm mb-8">실제 학부모님들의 솔직한 이야기</p>
 
     <div class="flex flex-col gap-4 mb-14">
-
+      <!-- [작성 텍스트] 후기 1: 김○○ 어머니 + 인용문 -->
       <div class="rounded-4xl p-5 shadow-sm border" style="background:#EFF9FF; border-color:#C8EEFF;">
         <div class="flex items-center gap-3 mb-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center font-jua text-lg flex-shrink-0"
@@ -374,6 +388,7 @@
         </p>
       </div>
 
+      <!-- [작성 텍스트] 후기 2: 박○○ 아버지 + 인용문 -->
       <div class="rounded-4xl p-5 shadow-sm border" style="background:#FFF0F3; border-color:#FFD4D4;">
         <div class="flex items-center gap-3 mb-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center font-jua text-lg flex-shrink-0"
@@ -390,6 +405,7 @@
         </p>
       </div>
 
+      <!-- [작성 텍스트] 후기 3: 이○○ 어머니 + 인용문 -->
       <div class="rounded-4xl p-5 shadow-sm border" style="background:#F0FFF4; border-color:#CCEFCC;">
         <div class="flex items-center gap-3 mb-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center font-jua text-lg flex-shrink-0"
@@ -409,15 +425,19 @@
 
     <!-- Teacher -->
     <p class="font-jua text-sm text-green-500 text-center mb-1 tracking-widest">TEACHER</p>
+    <!-- [작성 텍스트] 선생님 섹션 제목·부제 -->
     <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">👩‍🎨 선생님 소개</h2>
     <p class="text-center text-gray-400 text-sm mb-8">아이들의 가능성을 믿는 그림 선생님</p>
 
+    <!-- [실제 정보로 수정] 선생님 소개 전체: 사진, 이름, 전공/자격, 학력, 자격증, 경력, 전시, 인용문 -->
     <div class="rounded-4xl p-6 shadow-md" style="background: linear-gradient(135deg, #EDE0FF 0%, #FFE4E4 100%);">
       <div class="flex items-center gap-4 mb-5">
         <div class="w-24 h-24 rounded-3xl overflow-hidden flex-shrink-0 shadow-lg border-4 border-white">
+          <!-- [실제 정보로 수정] 원장 선생님 프로필 사진 URL -->
           <img src="https://placehold.co/200x200/C8B4E8/FFFFFF?text=👩‍🎨" alt="원장 선생님" class="w-full h-full object-cover" />
         </div>
         <div>
+          <!-- [실제 정보로 수정] 선생님 이름, 전공/자격 한 줄 -->
           <p class="font-jua text-lg text-gray-800">홍길동 원장 선생님</p>
           <p class="text-gray-500 text-xs mt-1 leading-relaxed">미술교육학 전공<br/>아동미술지도사 1급</p>
         </div>
@@ -426,23 +446,28 @@
       <div class="grid grid-cols-1 gap-2 text-sm text-gray-600 mb-5">
         <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
           <span>🎓</span>
+          <!-- [실제 정보로 수정] 학력 (졸업 학교/학과) -->
           <p>홍익대학교 미술교육학과 졸업</p>
         </div>
         <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
           <span>🏆</span>
+          <!-- [실제 정보로 수정] 자격증 -->
           <p>아동미술지도사 1급 자격증</p>
         </div>
         <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
           <span>✏️</span>
+          <!-- [실제 정보로 수정] 경력 -->
           <p>미술 교육 경력 10년+</p>
         </div>
         <div class="flex items-center gap-2 bg-white/60 rounded-2xl px-4 py-2.5">
           <span>🖼️</span>
+          <!-- [실제 정보로 수정] 전시/활동 이력 (없으면 문구 삭제 또는 수정) -->
           <p>키즈 미술 전문 갤러리 전시 참여</p>
         </div>
       </div>
 
       <div class="bg-white/70 rounded-3xl p-4 border-l-4 text-sm text-gray-600 italic leading-relaxed" style="border-color:#C8B4E8;">
+        <!-- [실제 정보로 수정] 선생님 인사말/인용문 -->
         "모든 아이는 타고난 예술가입니다. 제가 하는 일은 그 재능이 마음껏 펼쳐지도록 옆에서 응원하는 것이에요. 😊 그림 아트 스튜디오에서 우리 아이들이 행복하게 자라기를 바랍니다."
       </div>
     </div>
@@ -456,6 +481,7 @@
   <div class="max-w-lg mx-auto">
 
     <p class="font-jua text-sm text-lavender-dark text-center mb-1 tracking-widest">CONTACT</p>
+    <!-- [작성 텍스트] 상담·예약 섹션 제목·부제 -->
     <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">📋 상담 &amp; 예약 센터</h2>
     <p class="text-center text-gray-400 text-sm mb-8">궁금한 것들을 편하게 물어봐 주세요 🙌</p>
 
@@ -481,6 +507,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">부모님 성함 <span class="text-red-400">*</span></label>
+              <!-- [실제 정보 아님] placeholder만 예시: 홍길동 → 원하면 다른 예시로 변경 가능 -->
               <input type="text" name="parentName" placeholder="홍길동" required
                 class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
                 style="border-color:#EDE0FF;"
@@ -489,6 +516,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">연락처 <span class="text-red-400">*</span></label>
+              <!-- [실제 정보 아님] placeholder만 예시 (폼 제출값은 사용자 입력) -->
               <input type="tel" name="phone" placeholder="010-0000-0000" required
                 class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
                 style="border-color:#EDE0FF;"
@@ -505,6 +533,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 상담 시간</label>
+              <!-- [작성 텍스트] 시간 선택 옵션 (상담·예약 공통으로 아래에도 동일 옵션 있음) -->
               <select name="consultTime" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
                 style="border-color:#EDE0FF;"
                 onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'">
@@ -519,11 +548,13 @@
               </select>
             </div>
 
+            <!-- [작성 텍스트] 긴급 상담 체크 문구 -->
             <label class="flex items-center gap-3 rounded-3xl p-4 cursor-pointer border-2 border-yellow-200 hover:border-yellow-400 transition-colors" style="background:#FFFDE7;">
               <input type="checkbox" name="urgent" id="urgentCheck" class="w-5 h-5 rounded accent-purple-500 flex-shrink-0" />
               <span class="font-jua text-sm text-yellow-700">⚡ 최대한 빨리 상담 원해요!</span>
             </label>
 
+            <!-- [작성 텍스트] 버튼 문구: 선생님께 보내기 (상담·예약 공통) -->
             <button type="submit"
               class="w-full font-jua text-base text-white rounded-2xl py-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
               style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
@@ -544,6 +575,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">아이 이름 <span class="text-red-400">*</span></label>
+              <!-- [실제 정보 아님] placeholder만 예시 -->
               <input type="text" name="childName" placeholder="홍길동" required
                 class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
                 style="border-color:#FFD4D4;"
@@ -571,6 +603,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 수업</label>
+              <!-- [작성 텍스트] 희망 수업 선택 옵션 -->
               <select name="program" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
                 style="border-color:#FFD4D4;"
                 onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
@@ -628,8 +661,10 @@
       <span class="text-2xl">🎨</span>
       <span class="font-jua text-xl" style="color:#C8B4E8;">GRIMM ART STUDIO</span>
     </div>
+    <!-- [작성 텍스트] 푸터 학원명 부제 -->
     <p class="font-jua text-gray-400 text-sm mb-8">그림 아트 스튜디오</p>
 
+    <!-- [실제 정보로 수정] 주소, 전화번호, 영업시간, 인스타 링크/아이디 -->
     <div class="flex flex-col gap-2.5 text-sm text-gray-400 mb-8">
       <p class="flex items-center justify-center gap-2">
         <span>📍</span>
@@ -645,6 +680,7 @@
       </p>
     </div>
 
+    <!-- [실제 정보로 수정] 인스타그램 URL(href), @아이디 표시 텍스트 -->
     <!-- Instagram -->
     <a href="#"
        class="inline-flex items-center gap-2 text-white font-jua text-sm rounded-full px-6 py-3 mb-8 hover:opacity-90 transition-opacity shadow-lg"
@@ -675,12 +711,14 @@
 
     if (pricingOpen) {
       accordion.classList.add('open');
+      // [작성 텍스트] 가격표 닫기 버튼 문구
       btn.textContent = '💰 가격표 닫기 ▴';
       setTimeout(() => {
         accordion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }, 100);
     } else {
       accordion.classList.remove('open');
+      // [작성 텍스트] 가격표 보기 버튼 문구
       btn.textContent = '💰 가격표 보기 ▾';
     }
   }
@@ -743,6 +781,7 @@
 
     // 버튼 로딩 상태
     const originalText = btn.innerHTML;
+    // [작성 텍스트] 전송 중·완료·실패 토스트 문구 (아래 _showToast 호출들)
     btn.innerHTML  = '⏳ 전송 중...';
     btn.disabled   = true;
 
