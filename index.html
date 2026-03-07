@@ -97,6 +97,7 @@
   </style>
 </head>
 <body>
+<!-- 배포: GitHub Desktop에서 변경사항 커밋 후 Push origin 하면 Vercel이 해당 저장소를 감지해 자동으로 새 버전을 배포합니다. -->
 
 <!-- ===================== FLOATING ACTION BUTTONS ===================== -->
 <div class="fixed bottom-6 right-4 z-50 flex flex-col items-end gap-3">
@@ -496,7 +497,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 상담 날짜</label>
-              <input type="date" name="consultDate"
+              <input type="text" name="consultDate" placeholder="예: 3/15" inputmode="numeric"
                 class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
                 style="border-color:#EDE0FF;"
                 onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'" />
@@ -583,7 +584,7 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 날짜</label>
-              <input type="date" name="reserveDate"
+              <input type="text" name="reserveDate" placeholder="예: 3/15" inputmode="numeric"
                 class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
                 style="border-color:#FFD4D4;"
                 onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'" />
