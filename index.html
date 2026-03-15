@@ -93,6 +93,24 @@
     .fab-wrap { transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .fab-wrap:active { transform: scale(0.93); }
 
+    /* Time picker buttons */
+    .time-btn {
+      font-family: 'Jua', sans-serif;
+      font-size: 12px;
+      padding: 7px 4px;
+      border-radius: 10px;
+      border: 1.5px solid #E5E7EB;
+      background: #fff;
+      color: #6B7280;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100%;
+      text-align: center;
+    }
+    .time-btn:hover { border-color: #9B7EC8; color: #9B7EC8; }
+    .time-btn.c-sel { background: #9B7EC8; color: #fff; border-color: #9B7EC8; }
+    .time-btn.r-sel { background: #FF8B8B; color: #fff; border-color: #FF8B8B; }
+
     /* Schedule cell */
     .sch-cell {
       width: 36px;
@@ -481,26 +499,23 @@
   <div class="max-w-lg mx-auto">
 
     <p class="font-jua text-sm text-lavender-dark text-center mb-1 tracking-widest">CONTACT</p>
-    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">📋 상담 &amp; 예약 센터</h2>
+    <h2 class="font-jua text-2xl text-center text-gray-800 mb-2">📋 상담 신청</h2>
     <p class="text-center text-gray-400 text-sm mb-8">궁금한 것들을 편하게 물어봐 주세요 🙌</p>
 
-    <!-- Tab Buttons -->
-    <div class="flex gap-2 bg-white/70 backdrop-blur-sm rounded-3xl p-2 shadow-sm mb-6">
-      <button id="tabBtn1" onclick="switchTab(1)"
-        class="flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-white shadow-md"
-        style="background: linear-gradient(135deg, #9B7EC8, #C8B4E8);">
-        💬 상담 신청
-      </button>
-      <button id="tabBtn2" onclick="switchTab(2)"
-        class="flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-gray-400 hover:text-gray-600">
-        🖌️ 수업 예약
-      </button>
-    </div>
-
-    <!-- Tab 1: Consultation -->
-    <div id="tabContent1" class="tab-content active">
+    <!-- Consultation Form -->
+    <div>
       <div class="bg-white rounded-4xl p-6 shadow-lg">
-        <h3 class="font-jua text-lg mb-5" style="color:#9B7EC8;">💬 상담 신청서</h3>
+        <h3 class="font-jua text-lg mb-4" style="color:#9B7EC8;">💬 상담 신청서</h3>
+        <a href="tel:010-5926-7560"
+           class="flex items-center justify-center gap-3 w-full font-jua text-base text-white rounded-2xl py-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all mb-4"
+           style="background: linear-gradient(135deg, #9B7EC8, #7B5FA8);">
+          📞 지금 바로 상담하기
+        </a>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="flex-1 h-px bg-gray-200"></div>
+          <span class="font-jua text-xs text-gray-400">또는 아래에 남겨주세요</span>
+          <div class="flex-1 h-px bg-gray-200"></div>
+        </div>
         <form onsubmit="submitForm(event, '상담')">
           <div class="flex flex-col gap-4">
 
@@ -530,22 +545,39 @@
 
             <div>
               <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 상담 시간</label>
-              <select name="consultTime" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
-                style="border-color:#EDE0FF;"
-                onfocus="this.style.borderColor='#9B7EC8'" onblur="this.style.borderColor='#EDE0FF'">
-                <option value="">시간을 선택해 주세요</option>
-                <option>오전 10:00 (토요일)</option>
-                <option>오전 11:30 (토요일)</option>
-                <option>오후 1:00</option>
-                <option>오후 2:30</option>
-                <option>오후 4:00</option>
-              </select>
+              <input type="hidden" name="consultTime" id="consultTimeVal" />
+              <div class="rounded-2xl border-2 p-3" style="border-color:#EDE0FF;">
+                <p class="font-jua text-xs text-gray-400 mb-2">평일 (월~금)</p>
+                <div class="grid grid-cols-4 gap-1.5 mb-3">
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="13:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">13:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="13:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">13:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="14:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">14:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="14:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">14:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="15:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">15:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="15:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">15:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="16:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">16:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="16:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">16:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="17:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">17:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="17:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">17:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="18:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">18:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="18:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">18:30</button>
+                </div>
+                <p class="font-jua text-xs text-gray-400 mb-2">토요일</p>
+                <div class="grid grid-cols-4 gap-1.5">
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="10:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">10:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="10:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">10:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="11:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">11:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="11:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">11:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="12:00" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">12:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="12:30" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">12:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="13:00(토)" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">13:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="13:30(토)" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">13:30</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="14:00(토)" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">14:00</button>
+                  <button type="button" class="time-btn" data-tgroup="ct" data-time="14:30(토)" onclick="selectTime(this,'consultTimeVal','ct','c-sel')">14:30</button>
+                </div>
+              </div>
             </div>
 
-            <label class="flex items-center gap-3 rounded-3xl p-4 cursor-pointer border-2 border-yellow-200 hover:border-yellow-400 transition-colors" style="background:#FFFDE7;">
-              <input type="checkbox" name="urgent" id="urgentCheck" class="w-5 h-5 rounded accent-purple-500 flex-shrink-0" />
-              <span class="font-jua text-sm text-yellow-700">⚡ 최대한 빨리 상담 원해요!</span>
-            </label>
 
             <button type="submit"
               class="w-full font-jua text-base text-white rounded-2xl py-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
@@ -558,85 +590,6 @@
       </div>
     </div>
 
-    <!-- Tab 2: Reservation -->
-    <div id="tabContent2" class="tab-content">
-      <div class="bg-white rounded-4xl p-6 shadow-lg">
-        <h3 class="font-jua text-lg mb-5" style="color:#FF8B8B;">🖌️ 수업 예약서</h3>
-        <form onsubmit="submitForm(event, '예약')">
-          <div class="flex flex-col gap-4">
-
-            <div>
-              <label class="font-jua text-sm text-gray-600 block mb-1.5">아이 이름 <span class="text-red-400">*</span></label>
-              <input type="text" name="childName" placeholder="홍길동" required
-                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
-                style="border-color:#FFD4D4;"
-                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'" />
-            </div>
-
-            <div>
-              <label class="font-jua text-sm text-gray-600 block mb-1.5">아이 나이 <span class="text-red-400">*</span></label>
-              <select name="childAge" required
-                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
-                style="border-color:#FFD4D4;"
-                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
-                <option value="">나이를 선택해 주세요</option>
-                <option>4세</option>
-                <option>5세</option>
-                <option>6세</option>
-                <option>7세</option>
-                <option>8세</option>
-                <option>9세</option>
-                <option>10세</option>
-                <option>11세</option>
-                <option>12세</option>
-                <option>13세</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 수업</label>
-              <select name="program" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
-                style="border-color:#FFD4D4;"
-                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
-                <option value="">수업을 선택해 주세요</option>
-                <option>무료 체험수업</option>
-                <option>유치부 정규 (4~7세 · 월·수·금)</option>
-                <option>초등부 정규 (8~13세 · 화·목·토)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 날짜</label>
-              <input type="text" name="reserveDate" placeholder="예: 3/15" inputmode="numeric"
-                class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm transition-colors"
-                style="border-color:#FFD4D4;"
-                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'" />
-            </div>
-
-            <div>
-              <label class="font-jua text-sm text-gray-600 block mb-1.5">희망 시간</label>
-              <select name="reserveTime" class="w-full border-2 rounded-2xl px-4 py-3.5 text-sm bg-white transition-colors appearance-none"
-                style="border-color:#FFD4D4;"
-                onfocus="this.style.borderColor='#FF8B8B'" onblur="this.style.borderColor='#FFD4D4'">
-                <option value="">시간을 선택해 주세요</option>
-                <option>오전 10:00 (토요일)</option>
-                <option>오전 11:30 (토요일)</option>
-                <option>오후 1:00</option>
-                <option>오후 2:30</option>
-                <option>오후 4:00</option>
-              </select>
-            </div>
-
-            <button type="submit"
-              class="w-full font-jua text-base text-white rounded-2xl py-4 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
-              style="background: linear-gradient(135deg, #FF8B8B, #FFB4B4);">
-              선생님께 보내기 ✉️
-            </button>
-
-          </div>
-        </form>
-      </div>
-    </div>
 
   </div>
 </section>
@@ -759,6 +712,15 @@
 
   document.addEventListener('DOMContentLoaded', buildSchedule);
 
+  // ── Time Button Picker ─────────────────────────────────────────
+  function selectTime(btn, hiddenId, group, selClass) {
+    document.querySelectorAll(`[data-tgroup="${group}"]`).forEach(b => {
+      b.classList.remove('c-sel', 'r-sel');
+    });
+    btn.classList.add(selClass);
+    document.getElementById(hiddenId).value = btn.dataset.time;
+  }
+
   // ── Pricing Accordion ──────────────────────────────────────────
   let pricingOpen = false;
 
@@ -779,33 +741,6 @@
     }
   }
 
-  // ── Tab Switch ─────────────────────────────────────────────────
-  function switchTab(tab) {
-    const content1 = document.getElementById('tabContent1');
-    const content2 = document.getElementById('tabContent2');
-    const btn1 = document.getElementById('tabBtn1');
-    const btn2 = document.getElementById('tabBtn2');
-
-    const activeStyle   = 'flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-white shadow-md';
-    const inactiveStyle = 'flex-1 font-jua text-sm py-3.5 rounded-2xl transition-all text-gray-400 hover:text-gray-600';
-
-    if (tab === 1) {
-      content1.classList.add('active');
-      content2.classList.remove('active');
-      btn1.className = activeStyle;
-      btn1.style.background = 'linear-gradient(135deg, #9B7EC8, #C8B4E8)';
-      btn2.className = inactiveStyle;
-      btn2.style.background = '';
-    } else {
-      content2.classList.add('active');
-      content1.classList.remove('active');
-      btn2.className = activeStyle;
-      btn2.style.background = 'linear-gradient(135deg, #FF8B8B, #FFB4B4)';
-      btn1.className = inactiveStyle;
-      btn1.style.background = '';
-    }
-  }
-
   // ── Form Submit ─────────────────────────────────────────────────
   async function submitForm(event, type) {
     event.preventDefault();
@@ -814,25 +749,13 @@
     const fd   = new FormData(form);
 
     let payload;
-    if (type === '상담') {
-      payload = {
-        type:    '상담',
-        name:    fd.get('parentName'),
-        phone:   fd.get('phone'),
-        date:    fd.get('consultDate') || '-',
-        time:    fd.get('consultTime') || '-',
-        urgent:  fd.get('urgent') === 'on'
-      };
-    } else {
-      payload = {
-        type:      '예약',
-        childName: fd.get('childName'),
-        age:       fd.get('childAge'),
-        program:   fd.get('program')     || '-',
-        date:      fd.get('reserveDate') || '-',
-        time:      fd.get('reserveTime') || '-'
-      };
-    }
+    payload = {
+      type:  '상담',
+      name:  fd.get('parentName'),
+      phone: fd.get('phone'),
+      date:  fd.get('consultDate') || '-',
+      time:  fd.get('consultTime') || '-'
+    };
 
     const originalText = btn.innerHTML;
     btn.innerHTML = '⏳ 전송 중...';
@@ -846,16 +769,7 @@
         body:    JSON.stringify(payload)
       });
 
-      if (type === '상담') {
-        const urgent = payload.urgent;
-        _showToast(
-          urgent ? '⚡ 긴급 상담 신청 완료!' : '✅ 상담 신청 완료!',
-          urgent ? '최대한 빠르게 연락드리겠습니다 😊' : '빠른 시간 내에 연락드리겠습니다 😊',
-          '#9B7EC8'
-        );
-      } else {
-        _showToast('🎨 수업 예약 완료!', '선생님이 확인 후 연락드릴게요 🌟', '#FF8B8B');
-      }
+      _showToast('✅ 상담 신청 완료!', '빠른 시간 내에 연락드리겠습니다 😊', '#9B7EC8');
       form.reset();
 
     } catch (err) {
