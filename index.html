@@ -248,72 +248,11 @@
     <p class="text-center text-gray-400 text-sm mb-8">우리 아이에게 딱 맞는 수업을 찾아보세요</p>
 
     <!-- 요일별 시간표 -->
-    <div class="bg-white rounded-4xl p-5 shadow-md mb-6">
-      <h3 class="font-jua text-sm text-center text-gray-700 mb-4">📅 요일별 시간표</h3>
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th class="pb-2 w-16 text-left">
-                <span class="font-jua text-xs text-gray-400 pl-1">구분</span>
-              </th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-red-400">일</span></th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-gray-600">월</span></th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-gray-600">화</span></th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-gray-600">수</span></th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-gray-600">목</span></th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-gray-600">금</span></th>
-              <th class="pb-2 text-center"><span class="font-jua text-xs text-gray-600">토</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 유치부 row -->
-            <tr>
-              <td class="py-1 pl-1">
-                <p class="font-jua text-xs text-gray-600 leading-tight">유치부</p>
-                <p class="text-xs text-gray-400 leading-tight">(4~7세)</p>
-              </td>
-              <!-- 일 -->
-              <td class="py-1"><div class="sch-cell"></div></td>
-              <!-- 월 -->
-              <td class="py-1"><div class="sch-cell" style="background:#FFD166; color:#7A5A00;">유치</div></td>
-              <!-- 화 -->
-              <td class="py-1"><div class="sch-cell" style="background:#F3F4F6;"></div></td>
-              <!-- 수 -->
-              <td class="py-1"><div class="sch-cell" style="background:#FFD166; color:#7A5A00;">유치</div></td>
-              <!-- 목 -->
-              <td class="py-1"><div class="sch-cell" style="background:#F3F4F6;"></div></td>
-              <!-- 금 -->
-              <td class="py-1"><div class="sch-cell" style="background:#FFD166; color:#7A5A00;">유치</div></td>
-              <!-- 토 -->
-              <td class="py-1"><div class="sch-cell" style="background:#F3F4F6;"></div></td>
-            </tr>
-            <!-- 초등부 row -->
-            <tr>
-              <td class="py-1 pl-1">
-                <p class="font-jua text-xs text-gray-600 leading-tight">초등부</p>
-                <p class="text-xs text-gray-400 leading-tight">(8~13세)</p>
-              </td>
-              <!-- 일 -->
-              <td class="py-1"><div class="sch-cell"></div></td>
-              <!-- 월 -->
-              <td class="py-1"><div class="sch-cell" style="background:#F3F4F6;"></div></td>
-              <!-- 화 -->
-              <td class="py-1"><div class="sch-cell" style="background:#74C7EC; color:#1A4A6A;">초등</div></td>
-              <!-- 수 -->
-              <td class="py-1"><div class="sch-cell" style="background:#F3F4F6;"></div></td>
-              <!-- 목 -->
-              <td class="py-1"><div class="sch-cell" style="background:#74C7EC; color:#1A4A6A;">초등</div></td>
-              <!-- 금 -->
-              <td class="py-1"><div class="sch-cell" style="background:#F3F4F6;"></div></td>
-              <!-- 토 -->
-              <td class="py-1"><div class="sch-cell" style="background:#74C7EC; color:#1A4A6A;">초등</div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="bg-white rounded-4xl p-4 shadow-md mb-6">
+      <h3 class="font-jua text-sm text-center text-gray-700 mb-3">📅 요일별 시간표</h3>
+      <div id="scheduleCalendar"></div>
       <!-- 범례 -->
-      <div class="flex items-center justify-center gap-5 mt-3">
+      <div class="flex items-center justify-center gap-4 mt-3">
         <div class="flex items-center gap-1.5">
           <div class="w-3 h-3 rounded-sm flex-shrink-0" style="background:#FFD166;"></div>
           <span class="text-xs text-gray-500 font-jua">유치부 (4~7세)</span>
@@ -746,6 +685,79 @@
 <!-- ===================== JAVASCRIPT ===================== -->
 <script>
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz12HzIt8AZDdd1AYPaLKrR1IK1Jm0eq_TLGIDvUR09lnGLUHtgtAR6PUaDdFQTW3PBvA/exec';
+
+  // ── 2주 달력 시간표 ─────────────────────────────────────────────
+  function buildSchedule() {
+    const container = document.getElementById('scheduleCalendar');
+    if (!container) return;
+
+    const today = new Date();
+    // 이번 주 일요일 기준 시작
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - today.getDay());
+    weekStart.setHours(0, 0, 0, 0);
+
+    const dayLabels = ['일', '월', '화', '수', '목', '금', '토'];
+
+    let html = '<table style="width:100%; border-collapse:collapse; table-layout:fixed;">';
+
+    // 요일 헤더
+    html += '<thead><tr>';
+    dayLabels.forEach((d, i) => {
+      const color = i === 0 ? '#F87171' : '#6B7280';
+      html += `<th style="padding:2px 0 7px; font-family:'Jua',sans-serif; font-size:11px; color:${color}; text-align:center; font-weight:normal;">${d}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+
+    // 2주 행
+    for (let week = 0; week < 2; week++) {
+      html += `<tr>`;
+      for (let d = 0; d < 7; d++) {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + week * 7 + d);
+        const dateNum = date.getDate();
+        const isToday = date.toDateString() === today.toDateString();
+
+        let bgColor, numColor, label;
+
+        if (d === 0) {
+          // 일요일 — 휴무
+          bgColor = '#F3F4F6';
+          numColor = '#D1D5DB';
+          label = '';
+        } else if (d === 1 || d === 3 || d === 5) {
+          // 월·수·금 — 유치부
+          bgColor = '#FFD166';
+          numColor = '#7A5A00';
+          label = `<div style="font-family:'Jua',sans-serif; font-size:9px; color:#7A5A00; margin-top:1px;">유치</div>`;
+        } else {
+          // 화·목·토 — 초등부
+          bgColor = '#A8DDEF';
+          numColor = '#1A4A6A';
+          label = `<div style="font-family:'Jua',sans-serif; font-size:9px; color:#1A4A6A; margin-top:1px;">초등</div>`;
+        }
+
+        const todayStyle = isToday
+          ? 'box-shadow: 0 0 0 2px #9B7EC8; position:relative;'
+          : '';
+
+        html += `<td style="padding:2px;">
+          <div style="border-radius:8px; background:${bgColor}; padding:5px 2px; text-align:center; ${todayStyle}">
+            <div style="font-family:'Jua',sans-serif; font-size:12px; color:${numColor}; line-height:1.3;">${dateNum}</div>
+            ${label}
+          </div>
+        </td>`;
+      }
+      html += '</tr>';
+      // 주 사이 간격
+      if (week === 0) html += '<tr><td colspan="7" style="height:4px;"></td></tr>';
+    }
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  document.addEventListener('DOMContentLoaded', buildSchedule);
 
   // ── Pricing Accordion ──────────────────────────────────────────
   let pricingOpen = false;
