@@ -4,7 +4,10 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(where python:*)",
       "Bash(where python3:*)",
-      "Bash(where node:*)"
+      "Bash(where node:*)",
+      "Bash(ls -la /tmp/*.jpg /tmp/*.png)",
+      "Read(//c/Users/PC/Desktop/grim art studio/$TEMP/**)",
+      "Bash(find /tmp -name *.jpg -newer /tmp)"
     ]
   }
 }
